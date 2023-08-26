@@ -11,6 +11,7 @@
   </parent>
 
   <artifactId>playwright</artifactId>
+  <version>1.37.0-LL</version>
   <name>Playwright - Main Library</name>
   <description>Java library to automate Chromium, Firefox and WebKit with a single API.
     Playwright is built to enable cross-browser web automation that is ever-green, capable,
@@ -68,10 +69,12 @@
     <dependency>
       <groupId>com.microsoft.playwright</groupId>
       <artifactId>driver</artifactId>
+      <version>1.37.0</version>
     </dependency>
     <dependency>
       <groupId>com.microsoft.playwright</groupId>
       <artifactId>driver-bundle</artifactId>
+      <version>1.37.0</version>
     </dependency>
   </dependencies>
 </project>

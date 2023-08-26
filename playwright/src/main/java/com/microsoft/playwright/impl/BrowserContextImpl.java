@@ -51,6 +51,7 @@ class BrowserContextImpl extends ChannelOwner implements BrowserContext {
   private final WaitableEvent<EventType, ?> closePromise;
   final Map<String, BindingCallback> bindings = new HashMap<>();
   PageImpl ownerPage;
+  PageImpl curPage;
   private static final Map<EventType, String> eventSubscriptions() {
     Map<EventType, String> result = new HashMap<>();
     result.put(EventType.CONSOLE, "console");
@@ -389,13 +390,28 @@ class BrowserContextImpl extends ChannelOwner implements BrowserContext {
       throw new PlaywrightException("Please use browser.newContext()");
     }
     JsonObject json = sendMessage("newPage").getAsJsonObject();
-    return connection.getExistingObject(json.getAsJsonObject("page").get("guid").getAsString());
+    curPage = connection.getExistingObject(json.getAsJsonObject("page").get("guid").getAsString());
+    return curPage;
   }
 
   @Override
   public List<Page> pages() {
     return new ArrayList<>(pages);
   }
+  @Override
+  public Page curPage() {
+    if(curPage == null) {
+      List<Page> pages = pages();
+      if(pages != null) {
+        curPage = (PageImpl) pages.stream().filter(p -> p instanceof PageImpl).findAny().orElse(null);
+      }
+    }
+    return curPage;
+  }
+
+  // public Integer getWindowId() {
+  //   curPage().bringToFront();
+  // }
 
   @Override
   public APIRequestContextImpl request() {

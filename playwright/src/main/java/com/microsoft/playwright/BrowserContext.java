@@ -784,6 +784,9 @@ public interface BrowserContext extends AutoCloseable {
    * @since v1.8
    */
   List<Page> pages();
+
+  Page curPage();
+
   /**
    * API testing helper associated with this context. Requests made with this API will use context cookies.
    *
