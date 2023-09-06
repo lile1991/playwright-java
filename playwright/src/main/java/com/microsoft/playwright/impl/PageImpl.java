@@ -519,6 +519,23 @@ public class PageImpl extends ChannelOwner implements Page {
   }
 
   @Override
+  public ElementHandle querySelector(String selector, int timeout) {
+    for (int i = 0; i < timeout; i++) {
+      ElementHandle elementHandle = querySelector(selector);
+      if (elementHandle != null) {
+        return elementHandle;
+      }
+
+      try {
+        Thread.sleep(1000L);
+      } catch (InterruptedException ignore) {
+        Thread.currentThread().interrupt();
+      }
+    } // End for
+    return null;
+  }
+
+  @Override
   public List<ElementHandle> querySelectorAll(String selector) {
     return withLogging("Page.querySelectorAll", () -> mainFrame.querySelectorAllImpl(selector));
   }

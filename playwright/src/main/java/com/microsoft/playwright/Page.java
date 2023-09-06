@@ -5837,6 +5837,9 @@ public interface Page extends AutoCloseable {
    * @since v1.9
    */
   ElementHandle querySelector(String selector, QuerySelectorOptions options);
+
+  ElementHandle querySelector(String selector, int timeout);
+
   /**
    * The method finds all elements matching the specified selector within the page. If no elements match the selector, the
    * return value resolves to {@code []}.
