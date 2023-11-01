@@ -28,7 +28,6 @@ import com.microsoft.playwright.options.SelectOption;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -41,6 +40,16 @@ import static com.microsoft.playwright.options.ScreenshotType.PNG;
 public class ElementHandleImpl extends JSHandleImpl implements ElementHandle {
   ElementHandleImpl(ChannelOwner parent, String type, String guid, JsonObject initializer) {
     super(parent, type, guid, initializer);
+  }
+
+  @Override
+  public void attr(String name, String value) {
+    evaluate("e => e.setAttribute('" + name + "', '" + value + "')");
+  }
+  @Override
+  public String attr(String name) {
+    Object value = evaluate("e => e.getAttribute('" + name + "')");
+    return value == null ? null : value.toString();
   }
 
   @Override
@@ -590,4 +599,5 @@ public class ElementHandleImpl extends JSHandleImpl implements ElementHandle {
     }
     return connection.getExistingObject(element.get("guid").getAsString());
   }
+
 }

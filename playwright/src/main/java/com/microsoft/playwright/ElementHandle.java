@@ -57,6 +57,10 @@ import java.util.*;
  * }</pre>
  */
 public interface ElementHandle extends JSHandle {
+  void attr(String name, String value);
+
+  String attr(String name);
+
   class CheckOptions {
     /**
      * Whether to bypass the <a href="https://playwright.dev/java/docs/actionability">actionability</a> checks. Defaults to
